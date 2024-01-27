@@ -23,7 +23,7 @@ public class NormalAttack implements Action{
 
     @Override
     public boolean canExecute(Fight g) {
-        return issuer.hp > 0;
+        return issuer.hp > 0 && target.hp > 0;
     }
 
     @Override

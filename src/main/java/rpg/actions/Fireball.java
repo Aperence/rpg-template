@@ -5,15 +5,16 @@ import rpg.Observer;
 import rpg.StdoutObserver;
 import rpg.entities.Entity;
 import rpg.Fight;
+import rpg.entities.EntityComposite;
 
 public class Fireball implements Action{
 
-    Entity target;
+    EntityComposite target;
     Entity issuer;
-    int COST = 0;
+    int COST = 10;
     double MULTIPLIER = 1.5;
 
-    public Fireball(Entity target, Entity issuer){
+    public Fireball(EntityComposite target, Entity issuer){
         this.target = target;
         this.issuer = issuer;
     }
@@ -22,12 +23,17 @@ public class Fireball implements Action{
     public void execute(Fight g) {
         int dmg = (int) (issuer.magicPower * MULTIPLIER);
         obs.signal(log());
+        issuer.mp -= COST;
+        obs.signal(issuer.name + " has still " + issuer.mp + " mp");
         target.receiveHit(dmg, DamageType.MAGICAL);
     }
 
     @Override
     public boolean canExecute(Fight g) {
-        return issuer.hp > 0 && issuer.mp > COST;
+        if (issuer.hp > 0 && issuer.mp < COST){
+            obs.signal(issuer.name + " has insufficent MPs to launch this skill");
+        }
+        return issuer.hp > 0 && issuer.mp >= COST && target.numberRemainingFactions() > 0;
     }
 
     @Override

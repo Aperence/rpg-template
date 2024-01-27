@@ -6,9 +6,11 @@ import rpg.Observer;
 import rpg.StdoutObserver;
 import rpg.actions.Action;
 
-public abstract class Entity {
+import java.util.LinkedList;
+import java.util.List;
 
-    public String name;
+public abstract class Entity extends EntityComposite{
+
     int maxHP = 0;
     public int hp = 0;
     public int attack = 0;
@@ -21,6 +23,10 @@ public abstract class Entity {
     public Observer obs = new StdoutObserver();
 
     public Action action;
+
+    Entity(String name){
+        this.name = name;
+    }
 
 
     public void receiveHit(int amount, DamageType type){
@@ -36,11 +42,35 @@ public abstract class Entity {
         }
     }
 
+    public boolean eradicated(){
+        return hp == 0;
+    }
+
+    @Override
+    public EntityComposite getEntity(String name) {
+        if (this.name.equals(name)) return this;
+        return null;
+    }
+
+    public EntityComposite getEntity(LinkedList<String> name){
+        if (name.size() > 2 || name.isEmpty()) return null;
+        if (name.get(0).equals(this.name)) return this;
+        return null;
+    }
+
     public abstract void selectAction();
+
+    public int numberRemainingFactions(){
+        return hp > 0 ? 1 : 0;
+    }
 
     public void play(){
         Fight fight = Fight.getInstance();
         if (action.canExecute(fight))
             action.execute(fight);
     }
+
+    public EntityComposite winner(){return this;}
+
+    public String toString(){ return name;}
 }

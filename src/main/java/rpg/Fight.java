@@ -1,35 +1,34 @@
 package rpg;
 
+import rpg.entities.EntityComposite;
+import rpg.entities.Group;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Fight {
-    public List<Faction> factions;
+    public Group factions;
     public static Fight instance;
 
-    Fight(List<Faction> factions){
+    Fight(Group factions){
         this.factions = factions;
         instance = this;
     }
 
     public static Fight getInstance(){return instance;}
 
-    public Faction getFaction(String name){
-        return factions.stream().filter((f) -> f.name.equals(name)).collect(Collectors.toList()).get(0);
-    }
-
     public boolean hasWon(){
-        return factions.stream().filter((f) -> !f.eradicated()).collect(Collectors.toList()).size() <= 1;
+        return factions.numberRemainingFactions() <= 1;
     }
 
-    public Faction winner(){
-        return factions.stream().filter((f) -> !f.eradicated()).collect(Collectors.toList()).get(0);
+    public Group winner(){
+        return (Group) factions.winner();
     }
 
     public void selectActions(){
-        factions.forEach(Faction::selectActions);
+        factions.selectAction();
     }
     public void play(){
-        factions.forEach(Faction::play);
+        factions.play();
     }
 }

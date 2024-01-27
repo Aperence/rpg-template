@@ -1,29 +1,42 @@
 package rpg;
 
-import rpg.entities.Entity;
-import rpg.entities.PhysicEntity;
+import rpg.entities.*;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        Entity yuusha = new PhysicEntity("Yuusha", "enemy");
-        Entity maou = new PhysicEntity("Maou", "ally");
-        Faction faction1 = new Faction("ally", Arrays.asList(new Group(Arrays.asList(yuusha))));
-        Faction faction2 = new Faction("enemy", Arrays.asList(new Group(Arrays.asList(maou))));
+        Entity yuusha = new PhysicEntity("Yuusha", Arrays.asList("Maou", "Imp"));
+        Entity caster = new MagicEntity("Caster", "enemy");
+        Entity maou = new PhysicEntity("Maou", Arrays.asList("Yuusha", "Caster"));
+        Entity imp = new PhysicEntity("Imp", Arrays.asList("Caster", "Yuusha"));
 
-        Fight fight = new Fight(Arrays.asList(faction1, faction2));
+        Group faction1 = new Group("ally", Arrays.asList(new Group("1", Arrays.asList(yuusha, caster))));
+        Group faction2 = new Group(
+                "enemy", Arrays.asList(
+                        new Group("1", Arrays.asList(maou)),
+                        new Group("2", Arrays.asList(imp))
+                )
+        );
 
+        Group factions = new Group("battle", Arrays.asList(faction1, faction2));
+
+        /*
+        LinkedList<String> l = new LinkedList<>(Arrays.asList("battle", "enemy"));
+        EntityComposite temp = factions.getEntity(l);
+        System.out.println(temp);
+        */
+
+        Fight fight = new Fight(factions);
         while (!fight.hasWon()){
             fight.selectActions();
             fight.play();
+            System.out.println();
         }
 
-        Faction winner = fight.winner();
+        Group winner = fight.winner();
         System.out.println("Winner is the team: " + winner.name);
     }
 }
