@@ -27,4 +27,8 @@ public abstract class EntityComposite {
     public abstract EntityComposite winner();
 
     public abstract String toString();
+
+    public abstract List<Entity> getEntities();
+
+    abstract void getEntities(List<Entity> acc);
 }

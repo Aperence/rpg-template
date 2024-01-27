@@ -86,4 +86,16 @@ public class Group extends EntityComposite {
         builder.append("]");
         return builder.toString();
     }
+
+    public List<Entity> getEntities(){
+        List<Entity> ret = new LinkedList<>();
+        getEntities(ret);
+        return ret;
+    }
+
+    void getEntities(List<Entity> acc){
+        for (EntityComposite e : groups){
+            e.getEntities(acc);
+        }
+    }
 }

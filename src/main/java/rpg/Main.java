@@ -23,6 +23,9 @@ public class Main {
 
         Group factions = new Group("battle", Arrays.asList(faction1, faction2));
 
+        // two ways to access entities inside a group
+        System.out.println(factions.getEntity("ally").getEntities());
+        System.out.println(faction2.getEntities());
         /*
         LinkedList<String> l = new LinkedList<>(Arrays.asList("battle", "enemy"));
         EntityComposite temp = factions.getEntity(l);

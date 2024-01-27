@@ -6,6 +6,7 @@ import rpg.Observer;
 import rpg.StdoutObserver;
 import rpg.actions.Action;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,4 +74,12 @@ public abstract class Entity extends EntityComposite{
     public EntityComposite winner(){return this;}
 
     public String toString(){ return name;}
+
+    public List<Entity> getEntities(){
+        return Arrays.asList(this);
+    }
+
+    void getEntities(List<Entity> acc){
+        acc.add(this);
+    }
 }
