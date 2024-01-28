@@ -28,6 +28,10 @@ public class Fight {
     public void selectActions(){
         factions.selectAction();
     }
+
+    public void endOfTurn(){
+        factions.endOfTurn();
+    }
     public void play(){
         factions.play();
     }

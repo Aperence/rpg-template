@@ -1,4 +1,4 @@
-package rpg;
+package rpg.observers;
 
 public class StdoutObserver implements Observer{
     @Override

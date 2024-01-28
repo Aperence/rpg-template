@@ -98,4 +98,9 @@ public class Group extends EntityComposite {
             e.getEntities(acc);
         }
     }
+
+    @Override
+    public void endOfTurn() {
+        groups.forEach(EntityComposite::endOfTurn);
+    }
 }

@@ -2,5 +2,6 @@ package rpg;
 
 public enum DamageType {
     PHYSICAL,
-    MAGICAL
+    MAGICAL,
+    TRUE
 }

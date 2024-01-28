@@ -31,4 +31,6 @@ public abstract class EntityComposite {
     public abstract List<Entity> getEntities();
 
     abstract void getEntities(List<Entity> acc);
+
+    public abstract void endOfTurn();
 }

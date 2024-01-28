@@ -1,4 +1,4 @@
-package rpg;
+package rpg.observers;
 
 public interface Observer {
 

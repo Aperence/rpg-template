@@ -1,8 +1,6 @@
 package rpg.actions;
 
 import rpg.DamageType;
-import rpg.Observer;
-import rpg.StdoutObserver;
 import rpg.entities.Entity;
 import rpg.Fight;
 import rpg.entities.EntityComposite;
@@ -21,19 +19,19 @@ public class Fireball implements Action{
 
     @Override
     public void execute(Fight g) {
-        int dmg = (int) (issuer.magicPower * MULTIPLIER);
+        int dmg = (int) (issuer.currStats.magicPower * MULTIPLIER);
         obs.signal(log());
-        issuer.mp -= COST;
-        obs.signal(issuer.name + " has still " + issuer.mp + " mp");
+        issuer.currStats.mp -= COST;
+        obs.signal(issuer.name + " has still " + issuer.currStats.mp + " mp");
         target.receiveHit(dmg, DamageType.MAGICAL);
     }
 
     @Override
     public boolean canExecute(Fight g) {
-        if (issuer.hp > 0 && issuer.mp < COST){
+        if (issuer.currStats.hp > 0 && issuer.currStats.mp < COST){
             obs.signal(issuer.name + " has insufficent MPs to launch this skill");
         }
-        return issuer.hp > 0 && issuer.mp >= COST && target.numberRemainingFactions() > 0;
+        return issuer.currStats.hp > 0 && issuer.currStats.mp >= COST && target.numberRemainingFactions() > 0;
     }
 
     @Override

@@ -8,16 +8,20 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Entity yuusha = new PhysicEntity("Yuusha", Arrays.asList("Maou", "Imp"));
+        Entity yuusha = new PhysicEntity("Yuusha", Arrays.asList("Maou", "Imp 1", "Imp 2", "Imp 3"));
         Entity caster = new MagicEntity("Caster", "enemy");
-        Entity maou = new PhysicEntity("Maou", Arrays.asList("Yuusha", "Caster"));
-        Entity imp = new PhysicEntity("Imp", Arrays.asList("Caster", "Yuusha"));
+        Entity healer = new HealerEntity("Healer", "ally");
+        Entity thief = new ThiefEntity("Thief", "enemy");
+        Entity maou = new PhysicEntity("Maou", Arrays.asList("Yuusha", "Caster", "Healer", "Thief"));
+        Entity imp = new PhysicEntity("Imp 1", Arrays.asList("Caster", "Yuusha", "Healer", "Thief"));
+        Entity imp2 = new PhysicEntity("Imp 2", Arrays.asList("Caster", "Yuusha", "Healer", "Thief"));
+        Entity imp3 = new PhysicEntity("Imp 3", Arrays.asList("Caster", "Yuusha", "Healer", "Thief"));
 
-        Group faction1 = new Group("ally", Arrays.asList(new Group("1", Arrays.asList(yuusha, caster))));
+        Group faction1 = new Group("ally", Arrays.asList(new Group("1", Arrays.asList(yuusha, caster, healer, thief))));
         Group faction2 = new Group(
                 "enemy", Arrays.asList(
                         new Group("1", Arrays.asList(maou)),
-                        new Group("2", Arrays.asList(imp))
+                        new Group("2", Arrays.asList(imp, imp2, imp3))
                 )
         );
 
@@ -36,6 +40,7 @@ public class Main {
         while (!fight.hasWon()){
             fight.selectActions();
             fight.play();
+            fight.endOfTurn();
             System.out.println();
         }
 

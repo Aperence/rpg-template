@@ -1,8 +1,8 @@
 package rpg.actions;
 
 import rpg.Fight;
-import rpg.Observer;
-import rpg.StdoutObserver;
+import rpg.observers.Observer;
+import rpg.observers.StdoutObserver;
 
 public interface Action {
 
