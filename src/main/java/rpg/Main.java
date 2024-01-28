@@ -5,17 +5,18 @@ import rpg.entities.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
-        Entity yuusha = new PhysicEntity("Yuusha", Arrays.asList("Maou", "Imp 1", "Imp 2", "Imp 3"));
+        Entity yuusha = new PhysicEntity("Yuusha", "Maou", "enemy");
         Entity caster = new MagicEntity("Caster", "enemy");
         Entity healer = new HealerEntity("Healer", "ally");
         Entity thief = new ThiefEntity("Thief", "enemy");
-        Entity maou = new PhysicEntity("Maou", Arrays.asList("Yuusha", "Caster", "Healer", "Thief"));
-        Entity imp = new PhysicEntity("Imp 1", Arrays.asList("Caster", "Yuusha", "Healer", "Thief"));
-        Entity imp2 = new PhysicEntity("Imp 2", Arrays.asList("Caster", "Yuusha", "Healer", "Thief"));
-        Entity imp3 = new PhysicEntity("Imp 3", Arrays.asList("Caster", "Yuusha", "Healer", "Thief"));
+        Entity maou = new PhysicEntity("Maou", "Yuusha", "ally");
+        Entity imp = new PhysicEntity("Imp 1", "Caster", "ally");
+        Entity imp2 = new PhysicEntity("Imp 2", "Caster", "ally");
+        Entity imp3 = new PhysicEntity("Imp 3", "Caster", "ally");
 
         Group faction1 = new Group("ally", Arrays.asList(new Group("1", Arrays.asList(yuusha, caster, healer, thief))));
         Group faction2 = new Group(
@@ -44,7 +45,11 @@ public class Main {
             System.out.println();
         }
 
-        Group winner = fight.winner();
-        System.out.println("Winner is the team: " + winner.name);
+        Optional<EntityComposite> winner = fight.winner();
+        if (winner.isPresent()){
+            System.out.println("Winner is the team: " + winner.get().name);
+        }else{
+            System.out.println("Tie");
+        }
     }
 }

@@ -5,12 +5,15 @@ import rpg.Fight;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class EntityComposite {
 
     public String name = "";
 
     public abstract void receiveHit(int amount, DamageType type);
+
+    public abstract Optional<Entity> any();
 
     public abstract void selectAction();
 
@@ -24,7 +27,7 @@ public abstract class EntityComposite {
 
     public abstract int numberRemainingFactions();
 
-    public abstract EntityComposite winner();
+    public abstract Optional<EntityComposite> winner();
 
     public abstract String toString();
 

@@ -1,9 +1,13 @@
 package rpg;
 
+import rpg.entities.Entity;
 import rpg.entities.EntityComposite;
 import rpg.entities.Group;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
+import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
 public class Fight {
@@ -21,8 +25,8 @@ public class Fight {
         return factions.numberRemainingFactions() <= 1;
     }
 
-    public Group winner(){
-        return (Group) factions.winner();
+    public Optional<EntityComposite> winner(){
+        return factions.winner();
     }
 
     public void selectActions(){
@@ -33,6 +37,12 @@ public class Fight {
         factions.endOfTurn();
     }
     public void play(){
-        factions.play();
+        List<Entity> entities = factions.getEntities();
+        PriorityQueue<Entity> pq = new PriorityQueue<>((a, b) -> b.currStats.speed - a.currStats.speed);
+        pq.addAll(entities);
+        while (!pq.isEmpty()){
+            Entity e = pq.remove();
+            e.play();
+        }
     }
 }

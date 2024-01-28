@@ -11,6 +11,7 @@ import rpg.stats.Stats;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class Entity extends EntityComposite{
 
@@ -43,6 +44,10 @@ public abstract class Entity extends EntityComposite{
         }
     }
 
+    public Optional<Entity> any(){
+        return Optional.of(this);
+    }
+
     public boolean eradicated(){
         return currStats.hp == 0;
     }
@@ -71,7 +76,7 @@ public abstract class Entity extends EntityComposite{
             action.execute(fight);
     }
 
-    public EntityComposite winner(){return this;}
+    public Optional<EntityComposite> winner(){return Optional.of(this);}
 
     public String toString(){ return name;}
 

@@ -2,8 +2,10 @@ package rpg.entities;
 
 import rpg.DamageType;
 
+import javax.swing.text.html.Option;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class Group extends EntityComposite {
     public List<EntityComposite> groups;
@@ -53,6 +55,12 @@ public class Group extends EntityComposite {
         groups.forEach((g) -> g.receiveHit(amount, type));
     }
 
+    @Override
+    public Optional<Entity> any() {
+        List<Entity> entities = getEntities();
+        return entities.stream().filter((e) -> !e.eradicated()).findAny();
+    }
+
     public void play(){
         groups.forEach(EntityComposite::play);
     }
@@ -65,11 +73,11 @@ public class Group extends EntityComposite {
         return count;
     }
 
-    public EntityComposite winner(){
+    public Optional<EntityComposite> winner(){
         for (EntityComposite e : groups){
-            if (e.numberRemainingFactions() > 0) return e;
+            if (e.numberRemainingFactions() > 0) return Optional.of(e);
         }
-        return null;
+        return Optional.empty();
     }
 
     public String toString(){
